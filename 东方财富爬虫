@@ -1,0 +1,131 @@
+#东方财富-当天-5天-10天 机构资金净流入
+
+#基础知识讲解
+
+#第1步：import requests #代替浏览器对网站发起请求
+
+
+import requests
+import json
+
+cookies = {
+    'em-quote-version': 'topspeed',
+    'em_hq_fls': 'js',
+    'ct': 'UIuYvX4ylIlJf0yZhbZtI81t3wpO8a1v1DXHnJOBpWjhN2Gw3oSgLvdAYhNUlpEqyvY5tdeYO8z5p3lsFTG0DSzZBLAM2G6_C-1U8ehYcDSC5PfH3AydY9z49F2eevDcsTNAH9kR7kbbS0aLQLDqooKqw1pS2dgMOACr9Z4LJXo',
+    'ut': 'FobyicMgeV4pWolotD_rpEIXfcLddrsvnB0C4B0wwcW7YRm2gYvtLThjAFGfJFUTz6NyrXQ0j3waa7In-eaPdKi1YrM2TMmSbLRsVMU-ToKcU3NLobBPudaHqRhJAOfO_kCYC5EXwp1hf6CzQfPfDgl0D7PIkUH5TaFfzOsyva4VAUHSzI6knPwsJRYBcGqasARcGMGAUQm6zsEX2xipFsAECkp38MTv8F5U2SA3nGarHNPY_sEenw08aBYXXIShsNOt4muRXl8zP5HNJpTdGnUXlpABDKAFa4WbQoxFMFDhWYs1JY4huQvk0aa07sflwqWCZk6PsgseB1KDMGxJHK5iHhWOeV0GAdzHr1T0YYuw2ZbyG1bY8FVFsCjuzey1dnpmDAxH5VO7PikqikcI8QVmf5i6RA3xDYOUIoW5pOWHbncIlgH9ooVY4GpS9grSL7TcVDqkpvW8F8_F3NBuGiF9eApNUZ57lt5lR-aKpBCykACma0noqw',
+    'pi': '9687025151152890^%^3bl9687025151152890^%^3bTronoooooo^%^3bwFr5crl^%^2feSbhrmbZq6VTKV^%^2fKw9SGKDfR7zhICJfJsLc^%^2flaX90^%^2f3VsgFeYJlPhkZEOBZs3lbMNJ0l8i66fa3vJL1vqmTy5dK^%^2fc9B7djDUwel7haZJCGU9Arh7pdkEJAtPe05p^%^2b04RmGJLdMb8dpXK9cWaot3rAGC3IXUqRfs^%^2fqr9esgrGImnFuStFmyGAzNI07q3aIslb^%^3bRyGtrky3Gn7uNPOJbXJVv7dUMMLG0j8TQTZ1IXe1W^%^2bmgJ1ExYCTCXLijNwHF7F^%^2bvfhzipQvw8rcqLh6n0vRwbsQ^%^2fMb4yWq4eVzBLihPfqBedLgOU4eaiJNkglf6NO87FxJU^%^2f2cU7wwuOSLat^%^2bZKrtJRcy33UlQ^%^3d^%^3d',
+    'uidal': '9687025151152890Tronoooooo',
+    'sid': '118677162',
+    'vtpst': '^|',
+    'emhq_picfq': '0',
+    'qgqp_b_id': '762d9c17e7f23c744ec777e6a7199398',
+    'HAList': 'a-sz-000962-^%^u4E1C^%^u65B9^%^u94BD^%^u4E1A^%^2Ca-sh-600589-^%^u5E7F^%^u4E1C^%^u6995^%^u6CF0^%^2Ca-sh-603229-^%^u5965^%^u7FD4^%^u836F^%^u4E1A^%^2Ca-sz-300498-^%^u6E29^%^u6C0F^%^u80A1^%^u4EFD^%^2Ca-sh-603801-^%^u5FD7^%^u90A6^%^u5BB6^%^u5C45^%^2Ca-sz-002216-^%^u4E09^%^u5168^%^u98DF^%^u54C1^%^2Ca-sh-603005-^%^u6676^%^u65B9^%^u79D1^%^u6280^%^2Ca-sz-002955-^%^u9E3F^%^u5408^%^u79D1^%^u6280^%^2Ca-sz-300339-^%^u6DA6^%^u548C^%^u8F6F^%^u4EF6^%^2Ca-sz-002288-^%^u8D85^%^u534E^%^u79D1^%^u6280^%^2Ca-sh-603027-^%^u5343^%^u79BE^%^u5473^%^u4E1A^%^2Ca-sh-600588-^%^u7528^%^u53CB^%^u7F51^%^u7EDC^%^2Ca-sz-002065-^%^u4E1C^%^u534E^%^u8F6F^%^u4EF6^%^2Ca-sz-000987-^%^u8D8A^%^u79C0^%^u91D1^%^u63A7',
+    'st_si': '60909762144474',
+    'st_asi': 'delete',
+    'waptgshowtime': '2020822',
+    'cowCookie': 'true',
+    'intellpositionL': '303px',
+    'intellpositionT': '736px',
+    'st_pvi': '22725695989346',
+    'st_sp': '2020-03-17^%^2009^%^3A05^%^3A14',
+    'st_inirUrl': 'http^%^3A^%^2F^%^2Fquote.eastmoney.com^%^2Fzixuan^%^2F',
+    'st_sn': '60',
+    'st_psi': '20200822103109174-113300300813-4444653480',
+}
+
+headers = {
+    'Connection': 'keep-alive',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36 Edg/84.0.522.61',
+    'DNT': '1',
+    'Accept': '*/*',
+    'Referer': 'http://data.eastmoney.com/zjlx/detail.html',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+}
+
+params = (
+    ('pn', '1^'),
+    ('pz', '50^'),
+    ('po', '1^'),
+    ('np', '1^'),
+    ('ut', 'b2884a393a59ad64002292a3e90d46a5^'),
+    ('fltt', '2^'),
+    ('invt', '2^'),
+    ('fid0', 'f4001^'),
+    ('fid', 'f62^'),
+    ('fs', 'm:0 t:6 f:^!2,m:0 t:13 f:^!2,m:0 t:80 f:^!2,m:1 t:2 f:^!2,m:1 t:23 f:^!2,m:0 t:7 f:^!2,m:1 t:3 f:^!2^'),
+    ('stat', '1^'),
+    ('fields', 'f12,f14,f2,f3,f62,f184,f66,f69,f72,f75,f78,f81,f84,f87,f204,f205,f124^'),
+    ('rt', '53268782^'),
+    #('cb', 'jQuery183031612674437468025_1598063455775^'),
+    ('_', '1598063473058'),
+)
+
+response = requests.get('http://push2.eastmoney.com/api/qt/clist/get', headers=headers, params=params, cookies=cookies, verify=False)
+
+
+print(response) #response [200]-- 请求成功 [300]-- 请求重定向 [400]--请求失败  [500]--服务器内部错误
+
+#第2步：数据清洗、刷选
+
+
+# print(response.text) #获取所有数据
+#
+# print(type(response.text))
+#
+resp_dict = json.loads(response.text) #jsonn 数据传输的类型 转换成python 的字典类型
+
+# print(resp_dict)
+# print(type(resp_dict))
+
+
+#对数据进行取值
+
+datas = resp_dict.get('data').get('diff')
+
+# print(datas)
+companies = []
+prices = []
+for list_data in datas:
+    # print(list_data)
+    #1.公司名
+    company = list_data.get('f14')
+    #机构买入金额占比例
+    day_1 = list_data.get('f184')
+    # day_5 = list_data.get('f165')
+    # day_10 = list_data.get('f175')
+    #当天股价
+    price = list_data.get('f2')
+
+
+    if day_1 >= 15: #and day_5 >= 5 and day_10 >= 5: 网页没有5 10天数据 ，需要 整合
+        companies.append(company)
+        prices.append(price)
+
+
+print(companies)
+print(prices)
+
+# 第3步： 数据可视化,图表
+
+from pyecharts.charts import Bar #百度开源
+import pyecharts.options as opts # 引入图表设置选项，并把名字配置为 opts
+
+
+
+bar = Bar()
+
+bar.set_global_opts(
+    xaxis_opts=opts.AxisOpts(name='公司',
+        axislabel_opts=opts.LabelOpts(rotate=-40), #设置字体旋转 -40度
+
+
+    ),
+    yaxis_opts=opts.AxisOpts(name='价格：（元/每股）'), # Y轴 添加名称
+
+
+)
+bar.add_xaxis(companies)
+bar.add_yaxis('股价图',prices)
+
+bar.render('股价图.html')
+
